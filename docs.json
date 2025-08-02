@@ -15,17 +15,18 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "quickstart", "development"]
+            "pages": ["index", "quickstart"]
           },
           {
-            "group": "Essentials",
+            "group": "Account",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "account/markdown",
+              "account/code",
+              "account/images",
+              "account/settings",
+              "account/navigation",
+              "account/reusable-snippets",
+              "account/pricing"
             ]
           }
         ]
