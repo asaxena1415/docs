@@ -20,13 +20,9 @@
           {
             "group": "Account",
             "pages": [
-              "account/markdown",
-              "account/code",
-              "account/images",
-              "account/settings",
-              "account/navigation",
-              "account/reusable-snippets",
-              "account/pricing"
+              "account/pricing",
+              "account/message",
+              "account/api-reference"
             ]
           }
         ]
