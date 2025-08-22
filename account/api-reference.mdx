@@ -1,14 +1,46 @@
 ## API Keys
 
-An API key is a unique code used to identify and authenticate an application or user when making API calls.
-It acts like a secret password or access badge that grants permission to use an API’s services.
+An API Key is a unique identifier used to authenticate requests made from your application to CalStudio APIs.
+Think of it as a secure access badge that allows your application to use CalStudio’s services safely.
 
 At CalStudio we allow you to use our APIs using the API keys that we generate for you.
 
-### How to create your API Keys
+### Creating Your API Keys
 
-As soon as you login or signup to calstudio.com you will be navigated to dashboard.
-In the left side of the dashboard you will see a option of API Keys, click on it.
+You can generate and manage your API keys directly from your CalStudio Dashboard.
+Steps to Create an API Key:
+
+1. Log in or Sign up
+
+   - Visit calstudio.com and log in with your credentials.
+
+   - If you don’t have an account, sign up to access the dashboard.
+
+2. Navigate to API Keys Section
+
+   - On the left-hand sidebar of the dashboard, locate and click on API Keys.
+
+3. Generate a New Key
+
+   - Click the Create API Key button.
+
+   - Provide a label or description (optional, but recommended to help you identify usage).
+
+   - Your new API key will be generated instantly.
+
+4. Copy and Store Securely
+
+   - Copy the key and keep it in a secure location.
+
+### Best Practices for Using API Keys
+
+- Keep it secret → Never share your key publicly (e.g., GitHub, client-side code).
+
+- Restrict usage → Apply restrictions (IP, domain, or service-level) when possible.
+
+- Rotate regularly → Regenerate keys periodically and update your applications.
+
+- Revoke if compromised → Immediately delete and regenerate your key if you suspect unauthorized use.
 
 <img
   src="/images/api-keys.png"
@@ -16,8 +48,6 @@ In the left side of the dashboard you will see a option of API Keys, click on it
   height="300"
   className="rounded-lg"
 />
-
-Click on New Key to generate a new API key or if you already have one your API key will already be displayed below the New Key Button
 
 ### How to use your API Keys
 
