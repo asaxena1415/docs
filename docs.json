@@ -19,7 +19,12 @@
           },
           {
             "group": "Account",
-            "pages": ["account/pricing", "account/message", "account/api-keys"]
+            "pages": [
+              "account/pricing",
+              "account/message",
+              "account/api-keys",
+              "account/api-reference"
+            ]
           }
         ]
       },
