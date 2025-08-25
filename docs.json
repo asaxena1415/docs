@@ -23,7 +23,8 @@
               "account/pricing",
               "account/message",
               "account/api-keys",
-              "account/api-reference"
+              "account/api-reference",
+              "account/custom-domain"
             ]
           }
         ]
