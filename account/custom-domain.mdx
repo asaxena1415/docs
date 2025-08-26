@@ -1,0 +1,59 @@
+---
+title: "Custom Domain"
+description: "Publishing Your Custom GPT to a Custom Domain"
+sidebarTitle: "Custom domain"
+---
+
+To set up your documentation on a custom domain, you’ll need to set your desired custom domain in your Calstudio dashboard and configure your DNS settings on your domain provider.
+
+### Prerequisites
+
+- A CalStudio account
+
+- A registered domain (or subdomain) that you want to connect
+
+- Access to your domain’s DNS settings
+
+#### Steps to Publish a Custom GPT App
+
+1. To begin, navigate to the [Quickstart](/quickstart) and follow the instructions to create your first AI Bot.
+
+2. Launch and Publish
+
+   - In the app’s dashboard, locate the Status row and click Publish.
+
+   - Choose Custom Domain (you may also choose other publishing options, like a CalStudio-hosted link).
+
+3. Connect Your Custom Domain
+
+   - Enter the domain name or subdomain (e.g., chat.mydomain.com) you want to bind the app to.
+
+   - After submitting, CalStudio will generate NS records for you.
+
+   - Update your domain’s DNS settings with the provided records.
+
+   <Note>
+     ⚠️ Note: DNS propagation can take 24–48 hours before the changes are live.
+   </Note>
+
+4. Verify Deployment
+
+   - Once DNS updates have propagated, visit your custom domain.
+
+   - Your Custom GPT app should now be live and accessible publicly.
+
+#### Troubleshooting
+
+    - If the app doesn’t appear after 48 hours, confirm that your NS records are correctly configured.
+
+    - Check propagation status using free DNS lookup tools.
+
+    - Ensure no conflicting records (e.g., CNAME or A records) exist for the same domain.
+
+### Next Steps
+
+    - Customize the branding, UI, and integrations to make the GPT app fit seamlessly with your domain.
+
+    - Share your domain link with users without requiring them to sign up on CalStudio.
+
+✨ That’s it! You’ve successfully published your GPT app to your own custom domain using CalStudio.

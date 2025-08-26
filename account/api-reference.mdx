@@ -1,0 +1,142 @@
+### How to use your API Keys
+
+Make POST requests to https://calstudio.com/getbackResponse with the following parameters in the request body:
+
+- prompt: Your input text
+- apiKey: Your API key
+- appName: Name of your app
+- fileUrl (optional): URL to a file (image, PDF, or other document) for the AI to analyze. Only one file per request is supported.
+
+<CodeGroup>
+
+```javascript NodeJS
+const axios = require("axios");
+
+async function getAppResponse() {
+  try {
+    const response = await axios.post("https://calstudio.com/getbackResponse", {
+      prompt: "Hello, how are you?",
+      apiKey: "your_api_key_here",
+      appName: "your_app_name", // replace with your app name
+    });
+
+    console.log(response.data);
+    // {
+    //   message: "App's response",
+    //   status: 200,
+    //   success: true
+    // }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+```
+
+```python Python
+import requests
+
+def get_app_response():
+    try:
+        response = requests.post(
+            'https://calstudio.com/getbackResponse',
+            json={
+                'prompt': 'Hello, how are you?',
+                'apiKey': 'your_api_key_here',
+                'appName': 'your_app_name' // replace with your app name
+            }
+        )
+        print(response.json())
+    except Exception as e:
+        print('Error:', str(e))
+```
+
+```java Java
+public class AppRequest {
+    public static void main(String[] args) {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        String json = "{"
+                + "\"prompt\":\"Hello, how are you?\","
+                + "\"apiKey\":\"your_api_key_here\","
+                + "\"appName\":\"your_app_name\""
+                + "}";
+
+        RequestBody body = RequestBody.create(json, mediaType);
+
+        Request request = new Request.Builder()
+                .url("https://calstudio.com/getbackResponse")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            System.out.println(response.body().string());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```ruby Ruby on Rails
+require 'httparty'
+
+response = HTTParty.post(
+  'https://calstudio.com/getbackResponse',
+  headers: { 'Content-Type' => 'application/json' },
+  body: {
+    prompt: 'Hello, how are you?',
+    apiKey: 'your_api_key_here',
+    appName: 'your_app_name'
+  }.to_json
+)
+
+puts response.body
+
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://calstudio.com/getbackResponse"
+	jsonData := []byte(`{
+		"prompt": "Hello, how are you?",
+		"apiKey": "your_api_key_here",
+		"appName": "your_app_name"
+	}`)
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
+}
+
+
+```
+
+</CodeGroup>
+
+## Working with the files
+
+You can provide file URLs in your API requests to have the AI analyze images, PDFs, and other documents. Simply include the fileUrl parameter with a valid, publicly accessible URL to your file. Note: Only one file per request is supported.
