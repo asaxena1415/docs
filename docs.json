@@ -24,7 +24,8 @@
               "account/message",
               "account/api-keys",
               "account/api-reference",
-              "account/custom-domain"
+              "account/custom-domain",
+              "account/whatsApp"
             ]
           }
         ]
