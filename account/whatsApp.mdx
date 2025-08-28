@@ -1,0 +1,172 @@
+---
+title: "Mobile Integration"
+description: "How to Publish Your Custom AI Bot to SMS & WhatsApp"
+sidebarTitle: "Mobile Integration"
+---
+
+With CalStudio and Twilio, you can deploy your custom AI apps directly to SMS or WhatsApp — turning your chatbots into real-world communication assistants.
+
+    - This guide walks you step-by-step through the full setup:
+
+    - Creating your AI bot inside CalStudio
+
+    - Connecting Twilio for messaging
+
+    - Testing via sandbox
+
+    - Going live with WhatsApp Business API
+
+### Prerequisites
+
+    - A CalStudio account (free to start)
+
+    - A Twilio account (for messaging API access)
+
+    - A verified phone number for testing
+
+    - (Optional) Facebook Business Account for WhatsApp production setup
+
+### Steps
+
+#### Step 1: Create Your AI Bot in CalStudio
+
+    1. Sign in to your CalStudio Dashboard.
+
+    2. Click Create App.
+
+    3. Fill in the following fields:
+
+        - App Name
+
+        - App Icon (optional)
+
+        - AI Model (GPT‑4.1, Claude 4, Gemini, etc.)
+
+        - System Prompt / Bot Personality
+
+    5. Click Create App (top-right corner).
+
+    6. Once the app is created, click Launch to make it live.
+
+    ⚡ Note: No API key is required unless you specifically use OpenAI Assistants.
+
+#### Step 2: Connect CalStudio with Twilio
+
+    1. In your CalStudio dashboard, find your launched app and click Publish.
+
+    2. Choose Continue with Twilio.
+
+    3. A popup will request:
+
+        - Account SID
+
+        - Auth Token
+
+        - Twilio Phone Number
+
+    👉 Next, retrieve these credentials from Twilio.
+
+#### 🔑 Step 3: Get Twilio Credentials
+
+    1. Sign up or log in at Twilio Console.
+
+    2. During onboarding:
+
+        - Verify your phone number with OTP.
+
+        - Save your recovery code.
+
+    3. From your dashboard:
+
+        - Copy Account SID and Auth Token.
+
+    Paste these into the CalStudio popup (along with your Twilio number in E.164 format, e.g., +14155552671).
+    Click **Publish**.
+
+#### 🔄 Step 4: Configure Webhook in Twilio Sandbox
+
+    1. After publishing, CalStudio provides a Webhook URL for your app.
+
+    2. In Twilio Console, go to:
+
+        - Messaging → Try it Out → Send a WhatsApp Message
+
+        - Open Sandbox Settings
+
+    3. Paste the CalStudio Webhook URL in:
+
+        - “When a message comes in” box
+
+        - Set HTTP method: POST
+
+    4. Save changes.
+
+    5. Scan the provided QR Code to join the Sandbox.
+
+    ✅ Now you can test your WhatsApp bot immediately.
+
+#### 🏭 Step 5: Move to Production (WhatsApp Business API)
+
+    To make your AI bot accessible outside the sandbox:
+
+    1. In Twilio, click Upgrade Account and complete:
+
+        - Legal Name + Country
+
+        - Government ID Verification
+
+        - Payment Details
+
+    2. Buy a dedicated Twilio number:
+
+        - Phone Numbers → Manage → Buy Number
+
+        - Complete purchase
+
+    3. Register number with WhatsApp:
+
+        - Messaging → Senders → WhatsApp Senders → Get Started
+
+        - Choose Twilio Phone Number
+
+        - Login with Facebook to verify WhatsApp Business
+
+        - Provide:
+
+            - Business Info (Name, Category)
+
+            - Display Name for WhatsApp
+
+            - Verification via OTP
+
+    4. Update webhook again:
+
+        - Paste the CalStudio Webhook URL under Incoming Messages for your WhatsApp Sender
+
+        - Save
+
+#### 📲 Final Step: Test Your Live WhatsApp Bot
+
+    1. Save your newly purchased Twilio WhatsApp number to your contacts.
+
+    2. Send a message — your AI bot now responds directly in WhatsApp or SMS 🎉
+
+#### ⚙️ SMS Setup (Optional)
+
+    - For SMS, the process is almost identical.
+
+    - Instead of WhatsApp Sender Verification, simply connect your Twilio number under SMS settings and point incoming messages to your CalStudio Webhook.
+
+### ✅ Summary
+
+You’ve successfully:
+
+Built a custom AI bot in CalStudio
+
+Connected it with Twilio messaging
+
+Tested in Sandbox (free)
+
+Deployed to production with WhatsApp Business API
+
+Your AI bot can now chat with users directly over SMS or WhatsApp.

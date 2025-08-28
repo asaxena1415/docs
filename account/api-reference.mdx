@@ -1,3 +1,8 @@
+---
+title: "Api Reference"
+description: "How to generate your own API-key"
+---
+
 ### How to use your API Keys
 
 Make POST requests to https://calstudio.com/getbackResponse with the following parameters in the request body:
@@ -140,3 +145,149 @@ func main() {
 ## Working with the files
 
 You can provide file URLs in your API requests to have the AI analyze images, PDFs, and other documents. Simply include the fileUrl parameter with a valid, publicly accessible URL to your file. Note: Only one file per request is supported.
+
+<CodeGroup>
+
+```javascript NodeJS
+const axios = require("axios");
+
+async function getAppResponseWithFile() {
+  try {
+    const data = {
+      prompt: "What does this image show?",
+      apiKey: "your_api_key_here",
+      appName: "your_app_name",
+      fileUrl: "https://example.com/path/to/your/image.jpg",
+    };
+
+    const response = await axios.post(
+      "https://calstudio.com/getbackResponse",
+      data
+    );
+
+    console.log(response.data);
+    // {
+    //   message: "App's response about the image",
+    //   status: 200,
+    //   success: true
+    // }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+```
+
+```python Python
+import requests
+
+def get_app_response_with_file():
+    try:
+        # Create request data with file URL
+        data = {
+            'prompt': 'What does this image show?',
+            'apiKey': 'your_api_key_here',
+            'appName': 'your_app_name',
+            'fileUrl': 'https://example.com/path/to/your/image.jpg'
+        }
+
+        # Make the request with data including file URL
+        response = requests.post(
+            'https://calstudio.com/getbackResponse',
+            json=data
+        )
+
+        print(response.json())
+        # {
+        #   "message": "App's response about the image",
+        #   "status": 200,
+        #   "success": true
+        # }
+    except Exception as e:
+        print('Error:', str(e))
+
+```
+
+```ruby Ruby on Rails
+require 'httparty'
+
+class AppResponsesController < ApplicationController
+  include HTTParty
+  base_uri "https://calstudio.com"
+
+  def get_app_response_with_file
+    response = self.class.post(
+      "/getbackResponse",
+      body: {
+        prompt: "What does this image show?",
+        apiKey: "your_api_key_here",
+        appName: "your_app_name",
+        fileUrl: "https://example.com/path/to/your/image.jpg"
+      }.to_json,
+      headers: { "Content-Type" => "application/json" }
+    )
+
+    render json: {
+      status: response.code,
+      body: response.parsed_response
+    }
+  rescue => e
+    render json: { error: e.message }, status: 500
+  end
+end
+
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func getAppResponseWithFile() {
+	// Request payload
+	data := map[string]string{
+		"prompt":  "What does this image show?",
+		"apiKey":  "your_api_key_here",
+		"appName": "your_app_name",
+		"fileUrl": "https://example.com/path/to/your/image.jpg",
+	}
+
+	// Convert map to JSON
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return
+	}
+
+	// Make POST request
+	resp, err := http.Post("https://calstudio.com/getbackResponse",
+		"application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println("Error making request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read response
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+		return
+	}
+
+	fmt.Println("Response:", string(body))
+}
+
+func main() {
+	getAppResponseWithFile()
+}
+
+
+```
+
+</CodeGroup>
