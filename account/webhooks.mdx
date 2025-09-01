@@ -1,0 +1,73 @@
+---
+title: "Webhooks"
+description: "How to use webhooks"
+---
+
+## What are wehbhooks?
+
+    A webhook is a way for one app to automatically send information to another app in real time whenever something specific happens, like a notification or data update.<br/>
+
+    Webhooks are a core feature in automation platforms like Zapier and Make.com—they allow these tools to connect apps together and trigger workflows instantly when something happens in another app.
+
+### Using Webhooks in CalStudio
+
+    Integrate CalStudio with automation tools like Make.com or Zapier by connecting your webhook URL. This allows you to receive real-time notifications whenever specific events occur in your application.
+
+#### How to Set Up
+
+    1. **Enter your webhook URL**
+        Add the webhook URL provided by your Make.com or Zapier workflow.
+
+    2. **Choose when to trigger the webhook**
+        Select the event that should activate the webhook. You can choose from:
+
+            - **Message is Sent**: Triggers whenever a user sends a message.
+
+            - **New User Signs Up**: Triggers whenever a new user completes the signup process.
+
+            - **Custom Conditions**: Define advanced logic for triggering the webhook using a custom prompt.
+
+    3. Using Custom Conditions
+
+
+        - If you select Custom Conditions, enter a prompt describing when the webhook should be triggered.
+
+        - This prompt will be checked against the user’s message history.
+
+        - Example: If a user asks for a discount in their messages, trigger the webhook to summarize and send the details to your automation tool.
+
+#### Sample Webhook Request
+
+    When the webhook is triggered, CalStudio will send a POST request to your URL with a JSON body structured as follows:
+
+    <CodeGroup>
+
+        ```json JSON
+        {
+        "event": "Message sent",
+        "timestamp": "2024-01-01T12:00:00.000Z",
+        "app_name": "My App",
+        "user_email": "user@example.com",
+        "user_name": "John Doe",
+        "last_message": "User message",
+        "response": "App response message"
+        }
+        ```
+
+    </CodeGroup>
+
+    - event: The type of event that triggered the webhook ("Message sent", etc.).
+
+    - timestamp: The exact time the event occurred, formatted as ISO8601.
+
+    - app_name: The name of your CalStudio app.
+
+    - user_email: The user's email address.
+
+    - user_name: The user's display name.
+
+    - last_message: The most recent message sent by the user.
+
+    - response: The system's response to the user.
+
+This flow ensures your Make.com or Zapier workflows receive timely, useful information for any event or condition you specify—automating business logic, notifications, and more with minimal setup.

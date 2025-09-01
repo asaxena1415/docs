@@ -7,7 +7,7 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
-  "favicon": "/logo/calDark.png",
+  "favicon": "./logo/calDark.png",
   "navigation": {
     "tabs": [
       {
@@ -22,10 +22,10 @@
             "pages": [
               "account/pricing",
               "account/message",
-              "account/api-keys",
               "account/api-reference",
               "account/custom-domain",
-              "account/whatsApp-integration"
+              "account/whatsApp-integration",
+              "account/webhooks"
             ]
           }
         ]
