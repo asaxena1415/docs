@@ -1,172 +1,235 @@
 ---
 title: "WhatsApp Integration"
-description: "How to Publish Your Custom AI Bot to SMS & WhatsApp"
-sidebarTitle: "WhatsApp Integration"
+description: "Deploy your custom AI apps to WhatsApp and SMS with Twilio"
+icon: "whatsapp"
 ---
 
-With CalStudio and Twilio, you can deploy your custom AI apps directly to SMS or WhatsApp — turning your chatbots into real-world communication assistants.
-
-    - This guide walks you step-by-step through the full setup:
-
-    - Creating your AI bot inside CalStudio
-
-    - Connecting Twilio for messaging
-
-    - Testing via sandbox
-
-    - Going live with WhatsApp Business API
-
-### Prerequisites
-
-    - A CalStudio account (free to start)
-
-    - A Twilio account (for messaging API access)
-
-    - A verified phone number for testing
-
-    - (Optional) Facebook Business Account for WhatsApp production setup
-
-### Steps
-
-#### Step 1: Create Your AI Bot in CalStudio
-
-    1. Sign in to your CalStudio Dashboard.
-
-    2. Click Create App.
-
-    3. Fill in the following fields:
-
-        - App Name
-
-        - App Icon (optional)
-
-        - AI Model (GPT‑4.1, Claude 4, Gemini, etc.)
-
-        - System Prompt / Bot Personality
-
-    5. Click Create App (top-right corner).
-
-    6. Once the app is created, click Launch to make it live.
-
-    ⚡ Note: No API key is required unless you specifically use OpenAI Assistants.
-
-#### Step 2: Connect CalStudio with Twilio
-
-    1. In your CalStudio dashboard, find your launched app and click Publish.
-
-    2. Choose Continue with Twilio.
-
-    3. A popup will request:
-
-        - Account SID
-
-        - Auth Token
-
-        - Twilio Phone Number
-
-    👉 Next, retrieve these credentials from Twilio.
-
-#### 🔑 Step 3: Get Twilio Credentials
-
-    1. Sign up or log in at Twilio Console.
-
-    2. During onboarding:
-
-        - Verify your phone number with OTP.
-
-        - Save your recovery code.
-
-    3. From your dashboard:
-
-        - Copy Account SID and Auth Token.
-
-    Paste these into the CalStudio popup (along with your Twilio number in E.164 format, e.g., +14155552671).
-    Click **Publish**.
-
-#### 🔄 Step 4: Configure Webhook in Twilio Sandbox
-
-    1. After publishing, CalStudio provides a Webhook URL for your app.
-
-    2. In Twilio Console, go to:
-
-        - Messaging → Try it Out → Send a WhatsApp Message
-
-        - Open Sandbox Settings
-
-    3. Paste the CalStudio Webhook URL in:
-
-        - “When a message comes in” box
-
-        - Set HTTP method: POST
-
-    4. Save changes.
-
-    5. Scan the provided QR Code to join the Sandbox.
-
-    ✅ Now you can test your WhatsApp bot immediately.
-
-#### 🏭 Step 5: Move to Production (WhatsApp Business API)
-
-    To make your AI bot accessible outside the sandbox:
-
-    1. In Twilio, click Upgrade Account and complete:
-
-        - Legal Name + Country
-
-        - Government ID Verification
-
-        - Payment Details
-
-    2. Buy a dedicated Twilio number:
-
-        - Phone Numbers → Manage → Buy Number
-
-        - Complete purchase
-
-    3. Register number with WhatsApp:
-
-        - Messaging → Senders → WhatsApp Senders → Get Started
-
-        - Choose Twilio Phone Number
-
-        - Login with Facebook to verify WhatsApp Business
-
-        - Provide:
-
-            - Business Info (Name, Category)
-
-            - Display Name for WhatsApp
-
-            - Verification via OTP
-
-    4. Update webhook again:
-
-        - Paste the CalStudio Webhook URL under Incoming Messages for your WhatsApp Sender
-
-        - Save
-
-#### 📲 Final Step: Test Your Live WhatsApp Bot
-
-    1. Save your newly purchased Twilio WhatsApp number to your contacts.
-
-    2. Send a message — your AI bot now responds directly in WhatsApp or SMS 🎉
-
-#### ⚙️ SMS Setup (Optional)
-
-    - For SMS, the process is almost identical.
-
-    - Instead of WhatsApp Sender Verification, simply connect your Twilio number under SMS settings and point incoming messages to your CalStudio Webhook.
-
-### ✅ Summary
-
-You’ve successfully:
-
-Built a custom AI bot in CalStudio
-
-Connected it with Twilio messaging
-
-Tested in Sandbox (free)
-
-Deployed to production with WhatsApp Business API
-
-Your AI bot can now chat with users directly over SMS or WhatsApp.
+<Info>
+  Transform your CalStudio AI apps into powerful WhatsApp and SMS assistants. This integration allows your custom AI to communicate directly with users through their preferred messaging platforms.
+</Info>
+
+## Overview
+
+With CalStudio's Twilio integration, you can:
+
+- Deploy AI apps to WhatsApp Business accounts
+- Enable SMS communication for your AI assistants
+- Test safely using Twilio's sandbox environment
+- Scale to production with WhatsApp Business API
+- Handle customer support, sales inquiries, and automated responses
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+<CardGroup cols={2}>
+  <Card title="CalStudio Account" icon="user">
+    Free to start - [Sign up here](https://calstudio.com/signup)
+  </Card>
+  <Card title="Twilio Account" icon="message">
+    For messaging API access - [Create account](https://www.twilio.com/try-twilio)
+  </Card>
+  <Card title="Phone Number" icon="phone">
+    A verified number for testing
+  </Card>
+  <Card title="Facebook Business" icon="facebook">
+    Optional - Required for production WhatsApp deployment
+  </Card>
+</CardGroup>
+
+## Setup Guide
+
+### Step 1: Create Your AI App in CalStudio
+
+1. **Access your dashboard**
+   - Sign in to your [CalStudio Dashboard](https://calstudio.com/dashboard)
+   - Click **"Create App"**
+
+2. **Configure your AI app**
+   - **App Name**: Choose a descriptive name
+   - **App Icon**: Upload a logo (optional)
+   - **AI Model**: Select from GPT-4, Claude, Gemini, or others
+   - **System Prompt**: Define your bot's personality and behavior
+
+3. **Launch your app**
+   - Click **"Create App"** in the top-right corner
+   - Once created, click **"Launch"** to make it live
+
+<Note>
+  No API keys required! CalStudio handles all AI model connections for you.
+</Note>
+
+### Step 2: Connect CalStudio with Twilio
+
+1. In your CalStudio dashboard, locate your launched app
+2. Click **"Publish"** → **"Continue with Twilio"**
+3. You'll need to provide:
+   - **Account SID**: Your Twilio account identifier
+   - **Auth Token**: Your Twilio authentication token
+   - **Twilio Phone Number**: In E.164 format (e.g., +14155552671)
+
+<Tip>
+  Keep this window open while you retrieve your Twilio credentials in the next step.
+</Tip>
+
+### Step 3: Retrieve Twilio Credentials
+
+1. **Access Twilio Console**
+   - Sign up or log in at [Twilio Console](https://console.twilio.com)
+   - Complete phone verification with OTP
+   - Save your recovery code securely
+
+2. **Copy your credentials**
+   - From your Twilio dashboard, locate:
+     - **Account SID** (starts with AC...)
+     - **Auth Token** (click to reveal)
+   
+3. **Return to CalStudio**
+   - Paste your Account SID and Auth Token
+   - Add your Twilio phone number in E.164 format
+   - Click **"Publish"**
+
+<Warning>
+  Keep your Auth Token secure. Never share it publicly or commit it to version control.
+</Warning>
+
+### Step 4: Configure Webhook for Testing (Sandbox)
+
+1. **Get your webhook URL**
+   - After publishing, CalStudio generates a unique webhook URL
+   - Copy this URL for the next step
+
+2. **Configure Twilio Sandbox**
+   - In Twilio Console, navigate to:
+     - **Messaging** → **Try it Out** → **Send a WhatsApp Message**
+     - Click **"Sandbox Settings"**
+
+3. **Set up the webhook**
+   - Paste your CalStudio webhook URL in **"When a message comes in"**
+   - Set HTTP method to **POST**
+   - Save your changes
+
+4. **Join the sandbox**
+   - Scan the QR code provided by Twilio
+   - Or send the join code to the sandbox WhatsApp number
+
+<Check>
+  Your WhatsApp bot is now ready for testing! Send a message to see it in action.
+</Check>
+
+### Step 5: Deploy to Production
+
+<Steps>
+  <Step title="Upgrade Twilio Account">
+    1. Click **"Upgrade Account"** in Twilio Console
+    2. Complete verification:
+       - Legal name and country
+       - Government ID verification
+       - Payment details
+  </Step>
+  
+  <Step title="Purchase Phone Number">
+    1. Navigate to **Phone Numbers** → **Manage** → **Buy a Number**
+    2. Select a number with SMS and voice capabilities
+    3. Complete the purchase
+  </Step>
+  
+  <Step title="Register with WhatsApp Business">
+    1. Go to **Messaging** → **Senders** → **WhatsApp Senders**
+    2. Click **"Get Started"**
+    3. Select your Twilio phone number
+    4. Log in with Facebook to verify WhatsApp Business
+    5. Provide business information:
+       - Business name and category
+       - WhatsApp display name
+       - Complete OTP verification
+  </Step>
+  
+  <Step title="Configure Production Webhook">
+    1. In your WhatsApp Sender settings
+    2. Paste your CalStudio webhook URL under **"Incoming Messages"**
+    3. Save your configuration
+  </Step>
+</Steps>
+
+### Step 6: Test Your Production Bot
+
+1. **Add to contacts**
+   - Save your Twilio WhatsApp number to your phone contacts
+   
+2. **Start chatting**
+   - Send a message to your WhatsApp Business number
+   - Your AI app will respond instantly!
+
+<Check>
+  Congratulations! Your custom AI app is now live on WhatsApp.
+</Check>
+
+## SMS Integration (Optional)
+
+To enable SMS messaging for your AI app:
+
+1. Use the same Twilio phone number
+2. In Twilio Console, configure SMS settings
+3. Set incoming messages webhook to your CalStudio URL
+4. No additional verification required
+
+<Note>
+  SMS integration is simpler than WhatsApp as it doesn't require Facebook Business verification.
+</Note>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Message Templates" icon="file-lines">
+    Use WhatsApp-approved templates for business-initiated conversations
+  </Card>
+  <Card title="Response Time" icon="clock">
+    Configure your AI to respond quickly to maintain user engagement
+  </Card>
+  <Card title="Compliance" icon="shield-check">
+    Follow WhatsApp Business policies and Twilio's acceptable use guidelines
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation">
+    Set up fallback responses for when your AI can't understand a query
+  </Card>
+</CardGroup>
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Configure Webhooks" icon="webhook" href="/account/webhooks">
+    Set up automated workflows with Zapier or Make.com
+  </Card>
+  <Card title="Customize Your Bot" icon="palette" href="/quickstart">
+    Fine-tune your AI's personality and responses
+  </Card>
+  <Card title="Monitor Analytics" icon="chart-line" href="/account/pricing">
+    Track usage and conversations (Pro plans)
+  </Card>
+  <Card title="Get Support" icon="headset" href="mailto:support@calstudio.com">
+    Contact our team for assistance
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Bot not responding in WhatsApp">
+    - Verify webhook URL is correctly configured in Twilio
+    - Check that your CalStudio app is launched and active
+    - Ensure Twilio credentials are correct in CalStudio
+  </Accordion>
+  
+  <Accordion title="Messages delayed or not delivering">
+    - Check Twilio account balance and limits
+    - Verify phone number format (E.164)
+    - Review Twilio error logs for specific issues
+  </Accordion>
+  
+  <Accordion title="WhatsApp Business verification failed">
+    - Ensure Facebook Business account is properly set up
+    - Verify business information matches across platforms
+    - Contact Twilio support for verification assistance
+  </Accordion>
+</AccordionGroup>

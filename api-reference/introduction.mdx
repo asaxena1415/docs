@@ -1,33 +1,110 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Programmatically manage your CalStudio AI apps'
+icon: 'code'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
+The CalStudio API enables you to programmatically create, manage, and interact with your custom AI apps. Whether you're integrating CalStudio into your existing workflow or building advanced automation, our RESTful API provides comprehensive access to platform features.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+### Key Capabilities
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+- **App Management**: Create, update, and delete AI apps
+- **User Analytics**: Access detailed usage statistics and chat history
+- **Webhook Integration**: Receive real-time notifications for app events
+- **Custom Deployments**: Manage white-label configurations
+- **Payment Processing**: Handle subscriptions and credit purchases
+
+### Base URL
+
+```
+https://api.calstudio.com/v1
+```
+
+### API Versioning
+
+We use URL-based versioning to ensure backward compatibility. The current version is `v1`. We'll notify you well in advance of any breaking changes through our [changelog](https://pmfm.featurebase.app/changelog).
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+CalStudio uses API keys for authentication. Include your API key in the Authorization header of every request:
+
+```bash
+curl -X GET https://api.calstudio.com/v1/apps \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### Getting Your API Key
+
+1. Log in to your [CalStudio dashboard](https://calstudio.com/dashboard)
+2. Navigate to **Account Settings** → **API Keys**
+3. Click **Generate New Key**
+4. Store your key securely - it won't be shown again
+
+<Warning>
+  Keep your API keys secure and never expose them in client-side code or public repositories. Treat them like passwords.
+</Warning>
+
+## Rate Limits
+
+API requests are subject to rate limiting to ensure platform stability:
+
+| Plan | Requests per Minute | Requests per Day |
+|------|--------------------|-----------------|
+| Free | 60 | 1,000 |
+| Lite | 120 | 5,000 |
+| Pro | 300 | 25,000 |
+| Pro Plus | 600 | 100,000 |
+
+Rate limit headers are included in all responses:
+
+```
+X-RateLimit-Limit: 300
+X-RateLimit-Remaining: 299
+X-RateLimit-Reset: 1640995200
+```
+
+## Error Handling
+
+CalStudio API uses standard HTTP status codes and returns detailed error messages:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "error": {
+    "code": "invalid_api_key",
+    "message": "The provided API key is invalid or expired",
+    "request_id": "req_123abc"
   }
-]
+}
 ```
+
+### Common Error Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad Request - Invalid parameters |
+| 401 | Unauthorized - Invalid API key |
+| 403 | Forbidden - Insufficient permissions |
+| 404 | Not Found - Resource doesn't exist |
+| 429 | Too Many Requests - Rate limit exceeded |
+| 500 | Internal Server Error - Something went wrong |
+
+## Quick Start
+
+Ready to make your first API call? Check out these common use cases:
+
+<CardGroup cols={2}>
+  <Card title="List Your Apps" icon="list" href="/api-reference/endpoint/get">
+    Retrieve all AI apps in your account
+  </Card>
+  <Card title="Create an App" icon="plus" href="/api-reference/endpoint/create">
+    Programmatically create new AI apps
+  </Card>
+  <Card title="Configure Webhooks" icon="webhook" href="/api-reference/endpoint/webhook">
+    Set up real-time event notifications
+  </Card>
+  <Card title="Delete an App" icon="trash" href="/api-reference/endpoint/delete">
+    Remove AI apps from your account
+  </Card>
+</CardGroup>

@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Calstudio Docs",
+  "name": "CalStudio Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -11,21 +11,38 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Get Started",
-            "pages": ["index", "quickstart"]
+            "group": "Getting Started",
+            "pages": ["index", "quickstart", "development"]
           },
           {
-            "group": "Account",
+            "group": "Platform Features",
             "pages": [
               "account/pricing",
-              "account/message",
-              "account/api-reference",
               "account/custom-domain",
               "account/whatsApp-integration",
-              "account/webhooks"
+              "account/webhooks",
+              "account/api-reference"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
@@ -34,7 +51,7 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Community",
+          "anchor": "Join Community",
           "href": "https://discord.gg/FnktGy3mkV",
           "icon": "discord"
         },

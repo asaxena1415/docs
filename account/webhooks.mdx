@@ -1,73 +1,296 @@
 ---
 title: "Webhooks"
-description: "How to use webhooks"
+description: "Connect your AI apps to automation platforms and external services"
+icon: "webhook"
 ---
 
-## What are wehbhooks?
+## What are Webhooks?
 
-    A webhook is a way for one app to automatically send information to another app in real time whenever something specific happens, like a notification or data update.<br/>
+<Info>
+  Webhooks enable real-time communication between your CalStudio AI apps and external services. When specific events occur in your app, webhooks automatically send data to your chosen destination, powering instant automations and integrations.
+</Info>
 
-    Webhooks are a core feature in automation platforms like Zapier and Make.com—they allow these tools to connect apps together and trigger workflows instantly when something happens in another app.
+Webhooks are essential for:
+- **Automation Platforms**: Integrate with Zapier, Make.com, or custom workflows
+- **CRM Integration**: Sync conversations to Salesforce, HubSpot, or other systems
+- **Analytics**: Send chat data to your data warehouse or analytics tools
+- **Notifications**: Alert your team about important conversations
+- **Custom Workflows**: Trigger any action based on user interactions
 
-### Using Webhooks in CalStudio
+## Setting Up Webhooks
 
-    Integrate CalStudio with automation tools like Make.com or Zapier by connecting your webhook URL. This allows you to receive real-time notifications whenever specific events occur in your application.
+### Step 1: Create Your Webhook Endpoint
 
-#### How to Set Up
+First, create a webhook endpoint in your automation platform:
 
-    1. **Enter your webhook URL**
-        Add the webhook URL provided by your Make.com or Zapier workflow.
+<Tabs>
+  <Tab title="Zapier">
+    1. Create a new Zap
+    2. Choose **"Webhooks by Zapier"** as trigger
+    3. Select **"Catch Hook"**
+    4. Copy the webhook URL provided
+  </Tab>
+  <Tab title="Make.com">
+    1. Create a new scenario
+    2. Add **"Webhooks"** module
+    3. Select **"Custom webhook"**
+    4. Copy the webhook URL
+  </Tab>
+  <Tab title="Custom API">
+    1. Create an endpoint that accepts POST requests
+    2. Ensure it can handle JSON payloads
+    3. Return a 200 status code on success
+  </Tab>
+</Tabs>
 
-    2. **Choose when to trigger the webhook**
-        Select the event that should activate the webhook. You can choose from:
+### Step 2: Configure in CalStudio
 
-            - **Message is Sent**: Triggers whenever a user sends a message.
+1. **Navigate to your app settings**
+   - Open your AI app in the CalStudio dashboard
+   - Go to the **"Webhooks"** section
 
-            - **New User Signs Up**: Triggers whenever a new user completes the signup process.
+2. **Add your webhook URL**
+   - Paste the URL from your automation platform
+   - CalStudio will validate the URL format
 
-            - **Custom Conditions**: Define advanced logic for triggering the webhook using a custom prompt.
+3. **Select trigger events**
+   
+   Choose when to send webhook notifications:
+   
+   <CardGroup cols={2}>
+     <Card title="Message Sent" icon="message">
+       Triggers when a user sends a message to your AI app
+     </Card>
+     <Card title="New User Signup" icon="user-plus">
+       Triggers when a new user registers or starts using your app
+     </Card>
+     <Card title="Custom Conditions" icon="code-branch">
+       Define custom logic using natural language prompts
+     </Card>
+     <Card title="Conversation End" icon="stop">
+       Triggers when a conversation session ends
+     </Card>
+   </CardGroup>
 
-    3. Using Custom Conditions
+### Step 3: Configure Custom Conditions (Optional)
 
+For advanced use cases, create custom triggers:
 
-        - If you select Custom Conditions, enter a prompt describing when the webhook should be triggered.
+1. **Select "Custom Conditions"**
+2. **Write a trigger prompt** that describes when to fire the webhook
+3. **CalStudio will evaluate** each conversation against your conditions
 
-        - This prompt will be checked against the user’s message history.
+**Example prompts:**
+- "When a user asks about pricing or costs"
+- "If the user expresses frustration or dissatisfaction"
+- "When the user provides their email address"
+- "If the conversation mentions a competitor"
 
-        - Example: If a user asks for a discount in their messages, trigger the webhook to summarize and send the details to your automation tool.
+## Webhook Payload Structure
 
-#### Sample Webhook Request
+CalStudio sends a POST request with a JSON payload containing event details:
 
-    When the webhook is triggered, CalStudio will send a POST request to your URL with a JSON body structured as follows:
+<CodeGroup>
+```json Standard Event
+{
+  "event": "message_sent",
+  "timestamp": "2024-01-15T14:30:00.000Z",
+  "app_id": "app_abc123",
+  "app_name": "Customer Support Bot",
+  "user": {
+    "id": "user_xyz789",
+    "email": "john.doe@example.com",
+    "name": "John Doe"
+  },
+  "conversation": {
+    "id": "conv_123456",
+    "message_count": 5,
+    "last_message": "Can you help me track my order?",
+    "ai_response": "I'd be happy to help you track your order. Could you please provide your order number?"
+  },
+  "metadata": {
+    "session_duration": 120,
+    "platform": "web"
+  }
+}
+```
 
-    <CodeGroup>
+```json User Signup Event
+{
+  "event": "user_signup",
+  "timestamp": "2024-01-15T14:25:00.000Z",
+  "app_id": "app_abc123",
+  "app_name": "Customer Support Bot",
+  "user": {
+    "id": "user_xyz789",
+    "email": "john.doe@example.com",
+    "name": "John Doe",
+    "signup_date": "2024-01-15T14:25:00.000Z"
+  }
+}
+```
 
-        ```json JSON
-        {
-        "event": "Message sent",
-        "timestamp": "2024-01-01T12:00:00.000Z",
-        "app_name": "My App",
-        "user_email": "user@example.com",
-        "user_name": "John Doe",
-        "last_message": "User message",
-        "response": "App response message"
-        }
-        ```
+```json Custom Condition Event
+{
+  "event": "custom_condition_met",
+  "timestamp": "2024-01-15T14:35:00.000Z",
+  "app_id": "app_abc123",
+  "app_name": "Sales Assistant",
+  "condition": "User asked about pricing",
+  "user": {
+    "id": "user_xyz789",
+    "email": "jane.smith@example.com",
+    "name": "Jane Smith"
+  },
+  "conversation": {
+    "id": "conv_789012",
+    "relevant_messages": [
+      "What are your pricing plans?",
+      "Do you offer any discounts for annual subscriptions?"
+    ]
+  }
+}
+```
+</CodeGroup>
 
-    </CodeGroup>
+### Payload Fields
 
-    - event: The type of event that triggered the webhook ("Message sent", etc.).
+| Field | Type | Description |
+|-------|------|-------------|
+| `event` | string | The type of event that triggered the webhook |
+| `timestamp` | string | ISO 8601 formatted timestamp |
+| `app_id` | string | Unique identifier for your CalStudio app |
+| `app_name` | string | Display name of your app |
+| `user.id` | string | Unique user identifier |
+| `user.email` | string | User's email address (if available) |
+| `user.name` | string | User's display name |
+| `conversation.id` | string | Unique conversation identifier |
+| `conversation.last_message` | string | Most recent user message |
+| `conversation.ai_response` | string | AI's response to the user |
 
-    - timestamp: The exact time the event occurred, formatted as ISO8601.
+## Common Use Cases
 
-    - app_name: The name of your CalStudio app.
+<CardGroup cols={2}>
+  <Card title="Lead Capture" icon="user-plus">
+    Send qualified leads to your CRM when users express interest
+  </Card>
+  <Card title="Support Escalation" icon="headset">
+    Create tickets in Zendesk when users report issues
+  </Card>
+  <Card title="Analytics Tracking" icon="chart-line">
+    Log conversations to Google Analytics or Mixpanel
+  </Card>
+  <Card title="Email Follow-up" icon="envelope">
+    Trigger personalized emails based on conversation topics
+  </Card>
+</CardGroup>
 
-    - user_email: The user's email address.
+## Example: Zapier Integration
 
-    - user_name: The user's display name.
+Here's a step-by-step example of connecting CalStudio to Google Sheets via Zapier:
 
-    - last_message: The most recent message sent by the user.
+<Steps>
+  <Step title="Create a Zap">
+    1. Log in to Zapier and create a new Zap
+    2. Search for "Webhooks by Zapier" as the trigger
+    3. Choose "Catch Hook" as the trigger event
+    4. Copy the custom webhook URL
+  </Step>
+  
+  <Step title="Configure CalStudio">
+    1. Go to your app's webhook settings
+    2. Paste the Zapier webhook URL
+    3. Select "Message Sent" as the trigger
+    4. Save your configuration
+  </Step>
+  
+  <Step title="Test the Connection">
+    1. Send a test message in your AI app
+    2. Return to Zapier and click "Test trigger"
+    3. Zapier should receive the webhook data
+  </Step>
+  
+  <Step title="Add Google Sheets Action">
+    1. Add a new action step
+    2. Choose Google Sheets
+    3. Select "Create Spreadsheet Row"
+    4. Map webhook fields to sheet columns
+  </Step>
+</Steps>
 
-    - response: The system's response to the user.
+## Best Practices
 
-This flow ensures your Make.com or Zapier workflows receive timely, useful information for any event or condition you specify—automating business logic, notifications, and more with minimal setup.
+<Steps>
+  <Step title="Secure Your Endpoints">
+    - Use HTTPS for all webhook URLs
+    - Implement authentication tokens if needed
+    - Validate incoming requests
+  </Step>
+  <Step title="Handle Errors Gracefully">
+    - Return appropriate HTTP status codes
+    - Log failed webhook attempts
+    - Set up retry logic for failures
+  </Step>
+  <Step title="Process Asynchronously">
+    - Acknowledge webhooks quickly (< 3 seconds)
+    - Process data in background jobs
+    - Avoid blocking operations
+  </Step>
+  <Step title="Monitor Performance">
+    - Track webhook delivery rates
+    - Set up alerts for failures
+    - Monitor response times
+  </Step>
+</Steps>
+
+## Testing Webhooks
+
+<Tip>
+  Use tools like [webhook.site](https://webhook.site) or [RequestBin](https://requestbin.com) to test your webhook configuration before connecting to production systems.
+</Tip>
+
+1. Create a test webhook URL
+2. Configure it in CalStudio
+3. Trigger test events in your app
+4. Verify the payload structure
+5. Implement your automation logic
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Webhook not firing">
+    - Verify the webhook URL is correct and accessible
+    - Check that events are properly configured
+    - Ensure your app is active and receiving messages
+    - Test with a simple webhook receiver first
+  </Accordion>
+  
+  <Accordion title="Receiving duplicate webhooks">
+    - Implement idempotency using the conversation ID
+    - Check if multiple webhook configurations exist
+    - Verify your endpoint isn't triggering retries
+  </Accordion>
+  
+  <Accordion title="Missing data in payload">
+    - Some fields are only available for specific events
+    - User data requires users to be logged in
+    - Check your app's privacy settings
+  </Accordion>
+  
+  <Accordion title="Webhook delays">
+    - Webhooks are sent immediately after events
+    - Network latency may cause small delays
+    - Check your endpoint's response time
+  </Accordion>
+</AccordionGroup>
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="WhatsApp Integration" icon="whatsapp" href="/account/whatsApp-integration">
+    Connect your AI apps to WhatsApp
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Programmatic webhook management
+  </Card>
+</CardGroup>

@@ -1,48 +1,119 @@
 ---
-title: "Quickstart"
-description: "Get Started with CalStudio in 2 minutes"
+title: "Quickstart Guide"
+description: "Create your first custom AI app in 5 minutes"
+icon: "rocket"
 ---
 
-This quickstart will walk you through how to create an AI application in minutes using CalStudio's core features. By the end of it you will have a AI bot ready to do the work which it is defined to do.
+<Info>
+  This guide will walk you through creating your first custom AI app on CalStudio. You'll learn how to configure, customize, and deploy a fully functional AI application without writing any code.
+</Info>
 
-## Open [CalStudio.com](https://calstudio.com/login)
+## Prerequisites
 
-Login or Register and navigate to [dashboard](https://calstudio.com/dashboard).
+Before you begin, make sure you have:
+- A CalStudio account ([Sign up free](https://calstudio.com/signup))
+- An idea for your AI app (customer support bot, educational tutor, content generator, etc.)
 
-### Create app
+## Step 1: Access Your Dashboard
 
-Upon clicking on Create App you will navigated towards list of AI models to choose from. All the latest and best AI models are listed to choose from.
-Once you choose your AI provider (e.g. OpenAI), you will be navigated towards customizing your AI application
+1. Navigate to [CalStudio.com](https://calstudio.com/login)
+2. Log in with your credentials
+3. You'll be directed to your [dashboard](https://calstudio.com/dashboard) where you can manage all your AI apps
 
-1. Your window will be divided into two halves.
+## Step 2: Create Your AI App
 
-   - Multiple Tabs defining your AI application.
-     - Basic
-     - Design
-     - Credits
-     - Data
-     - Actions
-     - More
-   - Preview of your AI application.
+### Select Your AI Model
 
-2. In the Basics tab do the following:
-   - Upload a logo image for your AI application.
-   - Choose your AI model (eg: GPT-4.1 (OpenAI) if OpenAI was chosen in previous step)
-   - Name for your AI application
-   - Display name for your AI application
-   - A short description describing what your app does.
-   - A prompt stricly telling the AI what it needs to do.
-   - A welcome message.
-   - You also can turn on/off your login functionality for your application.
-3. Now navigate to Credits tab to define your monetization
-   - You can define how many free chats you want to give your users.
-   - If you want you can reset the free chats monthly.
-   - If you un-check the Disable Payments, you will get two options to monetize your AI model.
-     - One-time Payments
-     - Subscription
-   - We will go with One-time payments for now.
-   - Select your currency type for monetization (eg USD).
-   - Define the price for each chat eg: $1 will give you 2 credits.
-4. Now click on Create App button on the top-right corner. There you go your first AI application is ready.
+1. Click the **"Create App"** button on your dashboard
+2. Choose from our selection of cutting-edge AI models:
+   - **OpenAI** (GPT-4, GPT-3.5)
+   - **Anthropic** (Claude)
+   - **Meta** (Llama)
+   - **Google** (Gemini)
 
-## Next steps
+<Note>
+  No API keys required! CalStudio handles all the technical complexity for you.
+</Note>
+
+## Step 3: Configure Your App
+
+The app builder interface is divided into two sections:
+- **Configuration Panel** (left): Multiple tabs for customizing your app
+- **Live Preview** (right): See your changes in real-time
+
+### Basic Configuration
+
+In the **Basics** tab, set up your app's core functionality:
+
+1. **App Identity**
+   - Upload a logo for brand recognition
+   - Set your app name (internal identifier)
+   - Choose a display name (what users will see)
+   - Write a compelling description
+
+2. **AI Configuration**
+   - Select your specific model version (e.g., GPT-4 Turbo)
+   - Define the AI's behavior with a clear system prompt
+   - Set a welcoming message for first-time users
+
+3. **Access Control**
+   - Toggle login requirements
+   - Configure user authentication settings
+
+<Tip>
+  Your system prompt is crucial! Be specific about what your AI should and shouldn't do. For example: "You are a friendly customer support agent for an e-commerce store. Always be helpful, professional, and try to resolve issues quickly."
+</Tip>
+### Monetization Setup (Optional)
+
+Navigate to the **Credits** tab to configure how users access your app:
+
+1. **Free Tier Settings**
+   - Set number of free messages per user
+   - Enable monthly reset for recurring free access
+
+2. **Payment Options** (if monetizing)
+   - **One-time Payments**: Users purchase message credits
+   - **Subscription Model**: Monthly recurring access
+
+3. **Pricing Configuration**
+   - Select your currency (USD, EUR, GBP, etc.)
+   - Set your pricing structure
+   - Example: $5 for 50 messages, $10 for 150 messages
+
+<Info>
+  CalStudio uses Stripe for secure payment processing. Payments are available globally with support for multiple currencies.
+</Info>
+## Step 4: Launch Your App
+
+1. Review your configuration in the live preview
+2. Click the **"Create App"** button in the top-right corner
+3. Your AI app will be instantly deployed with a unique URL
+
+<Check>
+  Congratulations! Your custom AI app is now live and ready to use. Share the URL with your users or embed it on your website.
+</Check>
+
+## What's Next?
+
+Now that you've created your first AI app, explore these advanced features:
+
+<CardGroup cols={2}>
+  <Card title="Custom Domain" icon="globe" href="/account/custom-domain">
+    Use your own domain for professional branding
+  </Card>
+  <Card title="WhatsApp Integration" icon="whatsapp" href="/account/whatsApp-integration">
+    Connect your AI to WhatsApp for messaging
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/account/webhooks">
+    Integrate with external services and APIs
+  </Card>
+  <Card title="API Access" icon="code" href="/api-reference/introduction">
+    Programmatically manage your AI apps
+  </Card>
+</CardGroup>
+
+## Need Help?
+
+- Join our [Discord community](https://discord.gg/FnktGy3mkV) to connect with other creators
+- Contact [support@calstudio.com](mailto:support@calstudio.com) for technical assistance
+- Check our [changelog](https://pmfm.featurebase.app/changelog) for the latest features
