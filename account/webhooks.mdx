@@ -91,64 +91,15 @@ For advanced use cases, create custom triggers:
 CalStudio sends a POST request with a JSON payload containing event details:
 
 <CodeGroup>
-```json Standard Event
+```json Sample Webhook Request
 {
-  "event": "message_sent",
-  "timestamp": "2024-01-15T14:30:00.000Z",
-  "app_id": "app_abc123",
-  "app_name": "Customer Support Bot",
-  "user": {
-    "id": "user_xyz789",
-    "email": "john.doe@example.com",
-    "name": "John Doe"
-  },
-  "conversation": {
-    "id": "conv_123456",
-    "message_count": 5,
-    "last_message": "Can you help me track my order?",
-    "ai_response": "I'd be happy to help you track your order. Could you please provide your order number?"
-  },
-  "metadata": {
-    "session_duration": 120,
-    "platform": "web"
-  }
-}
-```
-
-```json User Signup Event
-{
-  "event": "user_signup",
-  "timestamp": "2024-01-15T14:25:00.000Z",
-  "app_id": "app_abc123",
-  "app_name": "Customer Support Bot",
-  "user": {
-    "id": "user_xyz789",
-    "email": "john.doe@example.com",
-    "name": "John Doe",
-    "signup_date": "2024-01-15T14:25:00.000Z"
-  }
-}
-```
-
-```json Custom Condition Event
-{
-  "event": "custom_condition_met",
-  "timestamp": "2024-01-15T14:35:00.000Z",
-  "app_id": "app_abc123",
-  "app_name": "Sales Assistant",
-  "condition": "User asked about pricing",
-  "user": {
-    "id": "user_xyz789",
-    "email": "jane.smith@example.com",
-    "name": "Jane Smith"
-  },
-  "conversation": {
-    "id": "conv_789012",
-    "relevant_messages": [
-      "What are your pricing plans?",
-      "Do you offer any discounts for annual subscriptions?"
-    ]
-  }
+  "event": "Message sent",
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "app_name": "My App",
+  "user_email": "user@example.com",
+  "user_name": "John Doe",
+  "last_message": "User message",
+  "response": "App response message"
 }
 ```
 </CodeGroup>
@@ -157,16 +108,13 @@ CalStudio sends a POST request with a JSON payload containing event details:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `event` | string | The type of event that triggered the webhook |
-| `timestamp` | string | ISO 8601 formatted timestamp |
-| `app_id` | string | Unique identifier for your CalStudio app |
-| `app_name` | string | Display name of your app |
-| `user.id` | string | Unique user identifier |
-| `user.email` | string | User's email address (if available) |
-| `user.name` | string | User's display name |
-| `conversation.id` | string | Unique conversation identifier |
-| `conversation.last_message` | string | Most recent user message |
-| `conversation.ai_response` | string | AI's response to the user |
+| `event` | string | The type of event that triggered the webhook ("Message sent", etc.) |
+| `timestamp` | string | The exact time the event occurred, formatted as ISO 8601 |
+| `app_name` | string | The name of your CalStudio app |
+| `user_email` | string | The user's email address |
+| `user_name` | string | The user's display name |
+| `last_message` | string | The most recent message sent by the user |
+| `response` | string | The AI app's response to the user |
 
 ## Common Use Cases
 
