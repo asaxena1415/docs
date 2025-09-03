@@ -1,59 +1,200 @@
 ---
 title: "Custom Domain"
-description: "Publishing Your Custom GPT to a Custom Domain"
-sidebarTitle: "Custom domain"
+description: "Connect your AI apps to your own domain for professional branding"
+icon: "globe"
 ---
 
-To set up your documentation on a custom domain, you’ll need to set your desired custom domain in your Calstudio dashboard and configure your DNS settings on your domain provider.
+<Info>
+  Custom domains allow you to publish your CalStudio AI apps on your own branded domain, providing a seamless experience for your users without any CalStudio branding.
+</Info>
 
-### Prerequisites
+## Overview
 
-- A CalStudio account
+With custom domains, you can:
+- Host your AI apps on your own domain (e.g., `chat.yourdomain.com`)
+- Maintain complete brand consistency
+- Build trust with professional URLs
+- Improve SEO and discoverability
 
-- A registered domain (or subdomain) that you want to connect
+## Prerequisites
 
-- Access to your domain’s DNS settings
+Before setting up a custom domain, ensure you have:
 
-#### Steps to Publish a Custom GPT App
+<CardGroup cols={2}>
+  <Card title="CalStudio Pro Plan" icon="credit-card">
+    Custom domains are available on Pro plans and above
+  </Card>
+  <Card title="Domain Ownership" icon="globe">
+    A registered domain with DNS management access
+  </Card>
+</CardGroup>
 
-1. To begin, navigate to the [Quickstart](/quickstart) and follow the instructions to create your first AI Bot.
+## Setup Process
 
-2. Launch and Publish
+### Step 1: Create and Launch Your App
 
-   - In the app’s dashboard, locate the Status row and click Publish.
+1. Follow the [Quickstart Guide](/quickstart) to create your AI app
+2. Configure and test your app thoroughly
+3. Click **"Launch"** to make it live
 
-   - Choose Custom Domain (you may also choose other publishing options, like a CalStudio-hosted link).
+### Step 2: Configure Custom Domain
 
-3. Connect Your Custom Domain
+1. In your app's dashboard, locate the **Status** section
+2. Click **"Publish"** → **"Custom Domain"**
+3. Enter your desired domain:
+   - **Root domain**: `yourdomain.com`
+   - **Subdomain**: `chat.yourdomain.com` (recommended)
 
-   - Enter the domain name or subdomain (e.g., chat.mydomain.com) you want to bind the app to.
+### Step 3: Configure DNS Settings
 
-   - After submitting, CalStudio will generate NS records for you.
+CalStudio will provide DNS records based on your domain type:
 
-   - Update your domain’s DNS settings with the provided records.
+<Tabs>
+  <Tab title="Subdomain (Recommended)">
+    For subdomains like `chat.yourdomain.com`:
+    
+    1. **You'll receive a CNAME record** from CalStudio
+    2. Add this record to your DNS provider:
+       ```
+       Type: CNAME
+       Name: chat (or your chosen subdomain)
+       Value: [provided-by-calstudio].calstudio.app
+       TTL: 3600 (or default)
+       ```
+    3. Save your DNS changes
+    
+    <Note>
+      Subdomains are easier to configure and don't affect your main website or email settings.
+    </Note>
+  </Tab>
+  
+  <Tab title="Root Domain">
+    For root domains like `yourdomain.com`:
+    
+    1. **You'll receive NS (Name Server) records** from CalStudio
+    2. This requires NS delegation at your domain registrar
+    3. Update your domain's nameservers to:
+       ```
+       ns1.calstudio.app
+       ns2.calstudio.app
+       ns3.calstudio.app
+       ns4.calstudio.app
+       ```
+    
+    <Warning>
+      NS delegation affects your entire domain. All DNS records (including email) must be managed through CalStudio after delegation.
+    </Warning>
+  </Tab>
+</Tabs>
 
-   <Note>
-     ⚠️ Note: DNS propagation can take 24–48 hours before the changes are live.
-   </Note>
+### Step 4: Verify Deployment
 
-4. Verify Deployment
+1. **Wait for DNS propagation** (usually 5-30 minutes for CNAME, up to 48 hours for NS)
+2. Visit your custom domain
+3. Your AI app should now be live!
 
-   - Once DNS updates have propagated, visit your custom domain.
+<Tip>
+  Use [DNS Checker](https://dnschecker.org) to verify your DNS records have propagated globally.
+</Tip>
 
-   - Your Custom GPT app should now be live and accessible publicly.
+## SSL Certificates
 
-#### Troubleshooting
+<Check>
+  CalStudio automatically provisions and manages SSL certificates for all custom domains using Let's Encrypt. Your app will be served securely over HTTPS.
+</Check>
 
-    - If the app doesn’t appear after 48 hours, confirm that your NS records are correctly configured.
+## Best Practices
 
-    - Check propagation status using free DNS lookup tools.
+<CardGroup cols={2}>
+  <Card title="Use Subdomains" icon="sitemap">
+    Subdomains are easier to manage and don't affect your main website
+  </Card>
+  <Card title="Test First" icon="flask">
+    Thoroughly test your app before connecting a production domain
+  </Card>
+  <Card title="Monitor Uptime" icon="chart-line">
+    Set up monitoring to ensure your custom domain stays accessible
+  </Card>
+  <Card title="Keep Records" icon="clipboard">
+    Document your DNS configuration for future reference
+  </Card>
+</CardGroup>
 
-    - Ensure no conflicting records (e.g., CNAME or A records) exist for the same domain.
+## Common DNS Providers
 
-### Next Steps
+Here's how to add DNS records in popular providers:
 
-    - Customize the branding, UI, and integrations to make the GPT app fit seamlessly with your domain.
+<AccordionGroup>
+  <Accordion title="Cloudflare">
+    1. Log in to Cloudflare dashboard
+    2. Select your domain
+    3. Go to **DNS** → **Records**
+    4. Click **Add record**
+    5. Choose CNAME type and enter CalStudio values
+    6. Ensure proxy status is set to **DNS only** (gray cloud)
+  </Accordion>
+  
+  <Accordion title="GoDaddy">
+    1. Sign in to GoDaddy Domain Control Center
+    2. Select your domain
+    3. Click **DNS** → **Manage DNS**
+    4. Click **ADD** under records
+    5. Select CNAME type and add CalStudio values
+  </Accordion>
+  
+  <Accordion title="Namecheap">
+    1. Sign in to Namecheap
+    2. Go to **Domain List** → **Manage**
+    3. Select **Advanced DNS**
+    4. Click **Add New Record**
+    5. Choose CNAME and enter CalStudio values
+  </Accordion>
+  
+  <Accordion title="Google Domains">
+    1. Sign in to Google Domains
+    2. Click your domain
+    3. Go to **DNS** → **Manage custom records**
+    4. Click **Create new record**
+    5. Add CNAME record with CalStudio values
+  </Accordion>
+</AccordionGroup>
 
-    - Share your domain link with users without requiring them to sign up on CalStudio.
+## Troubleshooting
 
-✨ That’s it! You’ve successfully published your GPT app to your own custom domain using CalStudio.
+<AccordionGroup>
+  <Accordion title="Domain not working after 48 hours">
+    - Verify DNS records are correctly configured
+    - Check for typos in the domain name
+    - Ensure no conflicting A or AAAA records exist
+    - Contact support with your domain details
+  </Accordion>
+  
+  <Accordion title="SSL certificate errors">
+    - CalStudio automatically handles SSL certificates
+    - If using Cloudflare, ensure proxy is disabled (DNS only)
+    - Allow up to 24 hours for certificate provisioning
+  </Accordion>
+  
+  <Accordion title="Email stopped working (root domain)">
+    - This occurs with NS delegation
+    - You'll need to recreate MX records in CalStudio's DNS manager
+    - Consider using a subdomain instead to avoid email issues
+  </Accordion>
+  
+  <Accordion title="Want to remove custom domain">
+    - Remove the domain in CalStudio dashboard first
+    - Then update/remove DNS records at your provider
+    - Your app will revert to the CalStudio subdomain
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="White-Label Branding" icon="palette" href="/account/pricing">
+    Remove all CalStudio branding (Pro Plus)
+  </Card>
+  <Card title="Embed Your App" icon="code" href="/quickstart">
+    Embed your AI app on existing websites
+  </Card>
+</CardGroup>
