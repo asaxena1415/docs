@@ -15,7 +15,7 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["index", "quickstart", "development"]
+            "pages": ["index", "quickstart"]
           },
           {
             "group": "Platform Features",
@@ -25,24 +25,6 @@
               "account/whatsApp-integration",
               "account/webhooks",
               "account/api-reference"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoints",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
             ]
           }
         ]
