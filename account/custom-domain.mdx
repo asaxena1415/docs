@@ -10,11 +10,13 @@ icon: "globe"
 
 ## Overview
 
-With custom domains, you can:
-- Host your AI apps on your own domain (e.g., `chat.yourdomain.com`)
+Custom domains solve a major limitation of AI chatbots - the ability to share and deploy them on your own website. With CalStudio, you can:
+- Host your AI apps on your own domain (e.g., `yourdomain.com` or `chat.yourdomain.com`)
+- Share your apps publicly without requiring user sign-ups
 - Maintain complete brand consistency
 - Build trust with professional URLs
 - Improve SEO and discoverability
+- Embed apps directly on your existing website
 
 ## Prerequisites
 
@@ -29,23 +31,40 @@ Before setting up a custom domain, ensure you have:
   </Card>
 </CardGroup>
 
-## Setup Process
+## Step-by-Step Setup Process
 
-### Step 1: Create and Launch Your App
+### Step 1: Sign Up and Access Dashboard
 
-1. Follow the [Quickstart Guide](/quickstart) to create your AI app
-2. Configure and test your app thoroughly
-3. Click **"Launch"** to make it live
+1. Sign up on the [CalStudio platform](https://calstudio.com/)
+2. Once signed up, you'll see your dashboard
 
-### Step 2: Configure Custom Domain
+### Step 2: Create Your AI App
 
-1. In your app's dashboard, locate the **Status** section
-2. Click **"Publish"** → **"Custom Domain"**
-3. Enter your desired domain:
+1. Click on the **"Create App"** button in your dashboard
+2. Fill out the app creation form with:
+   - **App Name**: Choose a descriptive name
+   - **Description**: Brief explanation of your app's purpose
+   - **AI Model**: Select your preferred model (GPT-4, GPT-3.5, Claude, etc.)
+   - **System Prompt**: Define your AI's behavior and personality
+   - **Knowledge Base**: Optionally upload files for your AI to reference
+3. Click **"Create App"** to generate your AI application
+
+### Step 3: Test and Launch Your App
+
+1. Test your app thoroughly using the built-in chat interface
+2. Make any necessary adjustments to the prompt or settings
+3. When satisfied, click **"Launch"** to make it publicly available
+
+### Step 4: Publish to Custom Domain
+
+1. In your app's dashboard, find the **Status** row
+2. Click on the **"Publish"** option
+3. Select **"Custom Domain"** from the publishing options
+4. Enter your desired domain:
    - **Root domain**: `yourdomain.com`
-   - **Subdomain**: `chat.yourdomain.com` (recommended)
+   - **Subdomain**: `app.yourdomain.com` or `chat.yourdomain.com`
 
-### Step 3: Configure DNS Settings
+### Step 5: Configure DNS Settings
 
 CalStudio will provide DNS records based on your domain type:
 
@@ -72,22 +91,23 @@ CalStudio will provide DNS records based on your domain type:
     For root domains like `yourdomain.com`:
     
     1. **You'll receive NS (Name Server) records** from CalStudio
-    2. This requires NS delegation at your domain registrar
-    3. Update your domain's nameservers to:
+    2. These will be AWS Route 53 nameservers (not CalStudio nameservers)
+    3. At your domain registrar, update your nameservers to the provided AWS records, which typically look like:
        ```
-       ns1.calstudio.app
-       ns2.calstudio.app
-       ns3.calstudio.app
-       ns4.calstudio.app
+       ns-1234.awsdns-12.org
+       ns-5678.awsdns-34.co.uk
+       ns-9012.awsdns-56.com
+       ns-3456.awsdns-78.net
        ```
+    4. This process can take 24-48 hours to propagate globally
     
     <Warning>
-      NS delegation affects your entire domain. All DNS records (including email) must be managed through CalStudio after delegation.
+      NS delegation affects your entire domain. All existing DNS records (including email, subdomains, etc.) will need to be recreated in the new DNS system. Consider using a subdomain instead if you have existing services on your root domain.
     </Warning>
   </Tab>
 </Tabs>
 
-### Step 4: Verify Deployment
+### Step 6: Verify Deployment
 
 1. **Wait for DNS propagation** (usually 5-30 minutes for CNAME, up to 48 hours for NS)
 2. Visit your custom domain
@@ -97,10 +117,91 @@ CalStudio will provide DNS records based on your domain type:
   Use [DNS Checker](https://dnschecker.org) to verify your DNS records have propagated globally.
 </Tip>
 
+## Visual Walkthrough
+
+<Note>
+  The screenshots below demonstrate the process of publishing a Custom GPT to a custom domain using CalStudio.
+</Note>
+
+### 1. Sign Up on CalStudio
+Navigate to [CalStudio](https://calstudio.com/) and create your account to get started.
+
+### 2. Create Your App
+Click the "Create App" button in your dashboard to begin building your Custom GPT.
+
+### 3. Configure Your AI App
+Fill in the essential details:
+- Choose your preferred AI model (GPT-4, GPT-3.5, Claude, etc.)
+- Set a clear name and description
+- Define the system prompt to customize your AI's behavior
+- Optionally add a knowledge base for specialized information
+
+### 4. Test and Launch
+After creation, test your app thoroughly in the dashboard. Once satisfied, launch it to make it publicly accessible.
+
+### 5. Publish to Custom Domain
+In the Status section, click "Publish" to see the publishing options:
+
+<img src="/images/publish-modal.png" alt="CalStudio Publish Modal" width="600" />
+
+Select "Custom Domain" from the available publishing options. You'll then be prompted to enter your domain name:
+
+<img src="/images/publish-modal-domain-input.png" alt="CalStudio Custom Domain Input" width="600" />
+
+Enter your domain name (root domain like `yourdomain.com` or subdomain like `app.yourdomain.com`).
+
+### 6. Configure DNS Records
+
+After entering your domain, you'll receive DNS records to configure:
+
+#### For Subdomains
+When publishing to a subdomain (e.g., `app.yourdomain.com`), you'll receive two CNAME records:
+
+<img src="/images/subdomain-record.png" alt="CalStudio Subdomain DNS Records Example" width="800" />
+
+**Example records you'll receive:**
+
+1. **SSL Certificate Validation Record**: 
+   - This CNAME record is required for SSL certificate validation
+   - It will have a long, unique name starting with an underscore
+   - The value points to AWS Certificate Manager for validation
+
+2. **Website CNAME Record**: 
+   - This points your subdomain to your CalStudio app
+   - Name: Your chosen subdomain (e.g., `app.yourdomain.com`)
+   - Value: An AWS load balancer URL
+
+**Important:** After adding these records, your website will be available at your custom domain. The first CNAME record is specifically for SSL certificate validation.
+
+#### For Root Domains
+Root domains will receive NS (nameserver) records as described in the DNS settings section above.
+
+## Video Tutorial
+
+<Info>
+  For a detailed video walkthrough of the custom domain setup process, watch this [helpful tutorial](https://youtu.be/z2jqALQbSbk).
+</Info>
+
+## App Studios Custom Domains
+
+<Info>
+  App Studios (bundles of multiple AI apps) can also be published to custom domains using the same process. This allows you to create your own AI marketplace under your branded domain.
+</Info>
+
+The publishing process for App Studios is identical to individual apps. When you select "Custom Domain" from the publishing options, you'll see the domain input modal:
+
+<img src="/images/studio-publish.png" alt="App Studio Custom Domain Input" width="600" />
+
+After entering your domain:
+- You'll receive the same DNS records (CNAME for subdomains or NS for root domains)
+- Configure them in your DNS provider following the instructions above
+- Your entire App Studio marketplace will be accessible at your custom domain
+- All apps within the studio will be available under your branded domain
+
 ## SSL Certificates
 
 <Check>
-  CalStudio automatically provisions and manages SSL certificates for all custom domains using Let's Encrypt. Your app will be served securely over HTTPS.
+  CalStudio automatically provisions and manages SSL certificates for all custom domains using AWS Certificate Manager. Your app will be served securely over HTTPS.
 </Check>
 
 ## Best Practices
@@ -120,9 +221,9 @@ CalStudio will provide DNS records based on your domain type:
   </Card>
 </CardGroup>
 
-## Common DNS Providers
+## How to Add CNAME Records
 
-Here's how to add DNS records in popular providers:
+Here's how to add the two CNAME records in popular DNS providers:
 
 <AccordionGroup>
   <Accordion title="Cloudflare">
@@ -130,8 +231,20 @@ Here's how to add DNS records in popular providers:
     2. Select your domain
     3. Go to **DNS** → **Records**
     4. Click **Add record**
-    5. Choose CNAME type and enter CalStudio values
-    6. Ensure proxy status is set to **DNS only** (gray cloud)
+    
+    **For the SSL validation record:**
+    - Type: CNAME
+    - Name: Paste the long underscore name (e.g., `_ce016fc2...`)
+    - Target: Paste the AWS validation value
+    - Proxy status: **DNS only** (gray cloud)
+    - TTL: Auto
+    
+    **For the subdomain record:**
+    - Type: CNAME
+    - Name: Your subdomain (e.g., `app`)
+    - Target: Paste the AWS load balancer URL
+    - Proxy status: **DNS only** (gray cloud)
+    - TTL: Auto
   </Accordion>
   
   <Accordion title="GoDaddy">
@@ -139,7 +252,14 @@ Here's how to add DNS records in popular providers:
     2. Select your domain
     3. Click **DNS** → **Manage DNS**
     4. Click **ADD** under records
-    5. Select CNAME type and add CalStudio values
+    
+    **For each CNAME record:**
+    - Type: CNAME
+    - Host: The record name (remove your domain from the end if GoDaddy adds it)
+    - Points to: The target value
+    - TTL: 1 hour
+    
+    5. Save both records
   </Accordion>
   
   <Accordion title="Namecheap">
@@ -147,7 +267,14 @@ Here's how to add DNS records in popular providers:
     2. Go to **Domain List** → **Manage**
     3. Select **Advanced DNS**
     4. Click **Add New Record**
-    5. Choose CNAME and enter CalStudio values
+    
+    **For each CNAME record:**
+    - Type: CNAME Record
+    - Host: The record name (without your domain)
+    - Value: The target value
+    - TTL: Automatic
+    
+    5. Save all changes
   </Accordion>
   
   <Accordion title="Google Domains">
@@ -155,7 +282,14 @@ Here's how to add DNS records in popular providers:
     2. Click your domain
     3. Go to **DNS** → **Manage custom records**
     4. Click **Create new record**
-    5. Add CNAME record with CalStudio values
+    
+    **For each CNAME record:**
+    - Type: CNAME
+    - Host name: The record name
+    - Data: The target value
+    - TTL: 1 hour
+    
+    5. Save both records
   </Accordion>
 </AccordionGroup>
 
