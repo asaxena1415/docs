@@ -1,0 +1,95 @@
+---
+title: "Koah Labs Ad Monetization"
+description: "Serve contextual AI ads inside your CalStudio apps through our partnership with Koah Labs."
+icon: "rectangle-ad"
+---
+
+<Info>
+  CalStudio now partners with <a href="https://www.koahlabs.com/guides/monetization-for-ai-app-creators" target="_blank">Koah Labs</a> so you can turn any AI experience into an ad-supported product without writing code.
+</Info>
+
+## Overview
+
+Koah Labs helps AI creators monetize apps with relevant, privacy-conscious ad placements. When you enable Koah Ads from your CalStudio app settings, the integration automatically:
+
+- Connects your selected app to Koah's contextual ad network
+- Detects what the end-user is talking about during a session
+- Serves inline ad suggestions that match the topic (e.g., workouts, finance, travel)
+- Tracks clicks and earnings so you can get paid out in cash
+
+## Requirements
+
+<CardGroup cols={2}>
+  <Card title="CalStudio App" icon="rocket">
+    Launch any app you want to monetize from your dashboard.
+  </Card>
+  <Card title="Koah Labs Account" icon="handshake">
+    Accept Koah's terms when enabling ads. Their <a href="https://www.koahlabs.com/guides/monetization-for-ai-app-creators" target="_blank">guide</a> covers how their marketplace works.
+  </Card>
+  <Card title="Stripe Connection" icon="credit-card">
+    Required to distribute ad earnings. Connect Stripe once per workspace so funds can be deposited.
+  </Card>
+  <Card title="Live App Traffic" icon="chart-simple">
+    Ads begin serving as soon as conversations hit qualifying contexts.
+  </Card>
+</CardGroup>
+
+## Enable Koah Ads in CalStudio
+
+### 1. Connect Stripe for payouts
+
+1. Sign in to the [CalStudio Dashboard](https://calstudio.com/dashboard) and open **Workspace Settings** → **Billing & Payouts**.
+2. Click **Connect Stripe** and complete Stripe's onboarding flow.
+3. Once Stripe shows as **Connected**, CalStudio can route Koah Labs ad payouts to your bank account.
+
+<Note>
+  You only need to connect Stripe once per workspace. All apps that monetize with Koah Ads will use the same payout destination.
+</Note>
+
+### 2. Enable Koah Ads on an app
+
+1. Open the app you want to monetize and click **App Settings** → **Monetization**.
+2. Toggle **Koah Ads** to **On** and accept the Koah Labs terms of service.
+3. Choose which user-facing surfaces should show ads (chat canvas, recommendations, follow-up cards, etc.).
+4. Save your changes. Ads will begin serving immediately without additional deployment steps.
+
+<Tip>
+  Leave the default placement settings if you are unsure. Koah optimizes layouts automatically and can be updated later.
+</Tip>
+
+### 3. Preview the experience
+
+1. Launch your app in preview mode.
+2. Start a conversation on a specific topic (e.g., “create a weight lifting routine”).
+3. When Koah detects the context, it returns an ad panel that matches the conversation, such as a training program or supplement offer.
+
+<img src="/images/koah_ad_example.png" alt="Contextual Koah Labs ad rendered inside a CalStudio chat" />
+
+<Check>
+  If you switch topics during a session, Koah automatically refreshes the ad creative so it remains relevant.
+</Check>
+
+## How contextual ads are selected
+
+Koah Labs analyzes the live conversation transcript (not stored by CalStudio) to understand the subject matter. Only context that is necessary to choose the correct ad is sent, and Koah returns a structured payload with:
+
+- Creative copy, image, and CTA metadata
+- Relevance tags (fitness, finance, travel, etc.)
+- Tracking identifiers for impressions and clicks
+
+CalStudio renders that payload in your chat UI without additional wiring. You maintain full control over the design via your existing theme settings.
+
+## Tracking clicks and earnings
+
+- **In-app analytics**: A dedicated Koah Ads dashboard inside **Analytics → Monetization** is in progress and targeted for **Q1 2026**.
+- **Monthly statements**: Until the dashboard ships, we will email you at the end of each month with a CSV that lists impressions, clicks, effective CPM/CPC, and the Stripe payout amount.
+- **Stripe transfers**: Expect deposits to land within 2–3 business days after each monthly statement. You will also see the transfer memo `CALSTUDIO · KOAH ADS`.
+
+<Warning>
+  If Stripe is disconnected or unverified, Koah Ads will pause automatically and we will notify the workspace owner so you can get back online before the next payout cycle.
+</Warning>
+
+## Resources
+
+- [Koah Labs Monetization Guide](https://www.koahlabs.com/guides/monetization-for-ai-app-creators)
+- [CalStudio Monetization Support](mailto:support@calstudio.com)

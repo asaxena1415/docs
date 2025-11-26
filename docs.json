@@ -23,6 +23,7 @@
               "account/pricing",
               "account/custom-domain",
               "account/whatsApp-integration",
+              "account/koah-labs-ads",
               "account/webhooks",
               "account/api-reference"
             ]
