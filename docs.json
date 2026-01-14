@@ -21,6 +21,7 @@
             "group": "Platform Features",
             "pages": [
               "account/pricing",
+              "account/access-code",
               "account/custom-domain",
               "account/whatsApp-integration",
               "account/koah-labs-ads",
