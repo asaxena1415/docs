@@ -1,0 +1,255 @@
+---
+title: "Custom Domain for Studios"
+description: "Connect your AI Studio to your own domain for a fully branded experience"
+icon: "globe-pointer"
+---
+
+<Info>
+  Custom domains for Studios allow you to publish your entire AI Studio marketplace on your own branded domain, giving your users a seamless experience under your own URL.
+</Info>
+
+## Overview
+
+When you connect a custom domain to your Studio, all the apps within that Studio become accessible under your branded domain. This is ideal for:
+- Creating a professional AI marketplace or portal under your brand
+- Providing a unified experience for all your AI apps
+- Building trust with your audience through a recognizable URL
+- Removing CalStudio branding from your Studio
+
+## Prerequisites
+
+Before setting up a custom domain for your Studio, ensure you have:
+
+<CardGroup cols={2}>
+  <Card title="CalStudio Pro Plan" icon="credit-card">
+    Custom domains are available on Pro plans and above
+  </Card>
+  <Card title="Live Studio" icon="rocket">
+    Your Studio must be published and live before adding a custom domain
+  </Card>
+  <Card title="Domain Ownership" icon="globe">
+    A registered domain with DNS management access
+  </Card>
+</CardGroup>
+
+## Step-by-Step Setup Process
+
+### Step 1: Navigate to Your Studios
+
+1. Log in to your [CalStudio dashboard](https://calstudio.com/dashboard)
+2. Go to the **Studios** page to see your list of Studios
+
+### Step 2: Open Studio Options
+
+1. Find the Studio you want to connect a custom domain to
+2. Click the **three-dot menu** (&#8942;) next to the Studio name
+3. You'll see the following options:
+   - View Studio
+   - Edit Studio
+   - Analytics
+   - Invite User
+   - Grant Credits
+   - **Custom Domain**
+   - Delete Studio
+
+<img src="/images/studio_domain1.png" alt="Studio options dropdown showing Custom Domain option" width="500" />
+
+### Step 3: Enter Your Domain
+
+1. Click **"Custom Domain"** from the menu
+2. The **Configure Custom Domain** dialog will appear
+3. Enter the domain you want to use for your Studio:
+   - **Root domain**: `yourdomain.com`
+   - **Subdomain**: `app.yourdomain.com` or `studio.yourdomain.com`
+4. Click **"Continue"**
+
+<img src="/images/studio_domain2.png" alt="Configure Custom Domain modal with domain input field" width="600" />
+
+### Step 4: Configure DNS Records
+
+After clicking Continue, CalStudio will provide you with **CNAME records** to add to your DNS provider.
+
+<Tabs>
+  <Tab title="Subdomain (Recommended)">
+    For subdomains like `studio.yourdomain.com`, you'll receive two CNAME records:
+
+    1. **SSL Certificate Validation Record**:
+       - This CNAME record is required for SSL certificate validation
+       - It will have a long, unique name starting with an underscore
+       - The value points to AWS Certificate Manager for validation
+       ```
+       Type: CNAME
+       Name: _abc123... (provided by CalStudio)
+       Value: _xyz789....acm-validations.aws
+       TTL: 3600 (or default)
+       ```
+
+    2. **Studio CNAME Record**:
+       - This points your subdomain to your CalStudio Studio
+       - Name: Your chosen subdomain (e.g., `studio`)
+       - Value: An AWS load balancer URL
+       ```
+       Type: CNAME
+       Name: studio (or your chosen subdomain)
+       Value: [provided-by-calstudio].elb.amazonaws.com
+       TTL: 3600 (or default)
+       ```
+
+    <Note>
+      Subdomains are recommended because they are easier to configure and don't affect your main website or email settings.
+    </Note>
+  </Tab>
+
+  <Tab title="Root Domain">
+    For root domains like `yourdomain.com`:
+
+    1. **You'll receive NS (Name Server) records** from CalStudio
+    2. These will be AWS Route 53 nameservers
+    3. At your domain registrar, update your nameservers to the provided AWS records:
+       ```
+       ns-1234.awsdns-12.org
+       ns-5678.awsdns-34.co.uk
+       ns-9012.awsdns-56.com
+       ns-3456.awsdns-78.net
+       ```
+    4. This process can take 24-48 hours to propagate globally
+
+    <Warning>
+      NS delegation affects your entire domain. All existing DNS records (including email, subdomains, etc.) will need to be recreated in the new DNS system. Consider using a subdomain instead if you have existing services on your root domain.
+    </Warning>
+  </Tab>
+</Tabs>
+
+### Step 5: Add Records to Your DNS Provider
+
+Add the CNAME records to your DNS provider. Here's how for popular providers:
+
+<AccordionGroup>
+  <Accordion title="Cloudflare">
+    1. Log in to Cloudflare dashboard
+    2. Select your domain
+    3. Go to **DNS** > **Records**
+    4. Click **Add record**
+
+    **For the SSL validation record:**
+    - Type: CNAME
+    - Name: Paste the long underscore name (e.g., `_ce016fc2...`)
+    - Target: Paste the AWS validation value
+    - Proxy status: **DNS only** (gray cloud)
+    - TTL: Auto
+
+    **For the subdomain record:**
+    - Type: CNAME
+    - Name: Your subdomain (e.g., `studio`)
+    - Target: Paste the AWS load balancer URL
+    - Proxy status: **DNS only** (gray cloud)
+    - TTL: Auto
+  </Accordion>
+
+  <Accordion title="GoDaddy">
+    1. Sign in to GoDaddy Domain Control Center
+    2. Select your domain
+    3. Click **DNS** > **Manage DNS**
+    4. Click **ADD** under records
+
+    **For each CNAME record:**
+    - Type: CNAME
+    - Host: The record name (remove your domain from the end if GoDaddy adds it)
+    - Points to: The target value
+    - TTL: 1 hour
+
+    5. Save both records
+  </Accordion>
+
+  <Accordion title="Namecheap">
+    1. Sign in to Namecheap
+    2. Go to **Domain List** > **Manage**
+    3. Select **Advanced DNS**
+    4. Click **Add New Record**
+
+    **For each CNAME record:**
+    - Type: CNAME Record
+    - Host: The record name (without your domain)
+    - Value: The target value
+    - TTL: Automatic
+
+    5. Save all changes
+  </Accordion>
+
+  <Accordion title="Google Domains">
+    1. Sign in to Google Domains
+    2. Click your domain
+    3. Go to **DNS** > **Manage custom records**
+    4. Click **Create new record**
+
+    **For each CNAME record:**
+    - Type: CNAME
+    - Host name: The record name
+    - Data: The target value
+    - TTL: 1 hour
+
+    5. Save both records
+  </Accordion>
+</AccordionGroup>
+
+### Step 6: Verify Deployment
+
+1. **Wait for DNS propagation** (usually 5-30 minutes for CNAME, up to 48 hours for NS)
+2. Visit your custom domain in the browser
+3. Your Studio and all its apps should now be live at your domain
+
+<Tip>
+  Use [DNS Checker](https://dnschecker.org) to verify your DNS records have propagated globally.
+</Tip>
+
+## SSL Certificates
+
+<Check>
+  CalStudio automatically provisions and manages SSL certificates for all custom domains using AWS Certificate Manager. Your Studio will be served securely over HTTPS — no additional configuration required.
+</Check>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Custom Domain option is grayed out or missing">
+    - Make sure your Studio is **live** (published). Custom domains can only be added to live Studios.
+  </Accordion>
+
+  <Accordion title="Domain not working after 48 hours">
+    - Verify DNS records are correctly configured
+    - Check for typos in the domain name
+    - Ensure no conflicting A or AAAA records exist
+    - Contact support at support@calstudio.com with your domain details
+  </Accordion>
+
+  <Accordion title="SSL certificate errors">
+    - CalStudio automatically handles SSL certificates
+    - If using Cloudflare, ensure proxy is disabled (DNS only)
+    - Allow up to 24 hours for certificate provisioning
+    - Ensure the SSL validation CNAME record is correctly added
+  </Accordion>
+
+  <Accordion title="Email stopped working (root domain)">
+    - This occurs with NS delegation for root domains
+    - You'll need to recreate MX records in the new DNS system
+    - Consider using a subdomain instead to avoid email issues
+  </Accordion>
+
+  <Accordion title="Want to remove the custom domain">
+    - Open the Studio options menu and click **Custom Domain**
+    - Remove the domain in the CalStudio dashboard
+    - Then update/remove DNS records at your provider
+    - Your Studio will revert to its default CalStudio URL
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Custom Domain for Apps" icon="globe" href="/account/custom-domain">
+    Set up custom domains for individual AI apps
+  </Card>
+  <Card title="White-Label Branding" icon="palette" href="/account/pricing">
+    Remove all CalStudio branding (Pro Plus)
+  </Card>
+</CardGroup>

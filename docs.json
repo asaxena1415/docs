@@ -23,8 +23,8 @@
               "account/pricing",
               "account/access-code",
               "account/custom-domain",
+              "account/studio-custom-domain",
               "account/whatsApp-integration",
-              "account/koah-labs-ads",
               "account/webhooks",
               "account/api-reference"
             ]
